@@ -54,6 +54,7 @@
   </dependencies>
 
   <build>
+    <finalName>${artifactId}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -66,6 +67,13 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>pl.pet.manager.ManagerApplication</mainClass>
+          <layers>
+            <enabled>true</enabled>
+            <includeLayerTools>true</includeLayerTools>
+          </layers>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
