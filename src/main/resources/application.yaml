@@ -1,8 +1,14 @@
 server:
   port: 7071
 management:
+  health:
+    defaults:
+      enabled: false
   endpoints:
     web:
       base-path: /
       exposure:
         include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
