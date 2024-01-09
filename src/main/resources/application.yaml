@@ -12,3 +12,11 @@ management:
   endpoint:
     health:
       show-details: always
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/myDB
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update

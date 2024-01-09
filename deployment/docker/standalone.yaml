@@ -86,3 +86,16 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
       DYNAMIC_CONFIG_ENABLED: 'true'
+
+  # ------------------------------------------------------------------------------------------------------------
+  # PostgreSQL
+  # ------------------------------------------------------------------------------------------------------------
+  postgres:
+    image: postgres
+    container_name: postgres-container
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: myDB
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
