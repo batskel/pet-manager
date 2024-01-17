@@ -13,7 +13,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,6 +29,9 @@ import java.time.LocalDateTime;
 @Table(name = "log_user")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserLog {
     /**
      * Field user id.
@@ -53,7 +59,7 @@ public class UserLog {
     /**
      * Join column for User table.
      */
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "id_user")
     @JsonIgnore
     private User user;

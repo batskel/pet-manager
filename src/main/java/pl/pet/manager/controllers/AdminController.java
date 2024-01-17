@@ -30,7 +30,7 @@ public class AdminController {
      *
      * @return list users
      */
-    @GetMapping()
+    @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }

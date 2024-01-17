@@ -12,6 +12,7 @@ import pl.pet.manager.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service for login/logout into the system.
@@ -40,11 +41,16 @@ public class UserLogService {
      * @return true if success login
      */
     public boolean login(final String login, final String password) {
-        User user = userRepository.findByUsername(login);
-        UserCred userCred = userCredRepository.findByUserId(user.getId()).orElse(null);
-        boolean success = userCred.getPassword().equals(password);
-        saveLog(success, user.getId(), ActionEnum.SIGN_IN);
-        return success;
+        Optional<User> user = userRepository.findByUsername(login);
+        if (user.isPresent()) {
+            User foundUser = user.get();
+            UserCred userCred = userCredRepository.findByUserId(foundUser.getId()).orElse(null);
+            boolean success = userCred.getPassword().equals(password);
+            saveLog(success, foundUser.getId(), ActionEnum.SIGN_IN);
+            return success;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -54,9 +60,14 @@ public class UserLogService {
      * @return true if success logOut
      */
     public boolean logOut(final String login) {
-        User user = userRepository.findByUsername(login);
-        saveLog(true, user.getId(), ActionEnum.LOG_OUT);
-        return true;
+        Optional<User> user = userRepository.findByUsername(login);
+        if (user.isPresent()) {
+            User foundUser = user.get();
+            saveLog(true, foundUser.getId(), ActionEnum.LOG_OUT);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -69,11 +80,16 @@ public class UserLogService {
     }
 
     private void saveLog(final boolean success, final Long userId, final ActionEnum action) {
-        UserLog userLog = new UserLog();
-        userLog.setUser(userRepository.findById(userId).orElse(null));
-        userLog.setAction(action);
-        userLog.setSuccess(success);
-        userLog.setTimestamp(LocalDateTime.now());
+        Optional<User> user = userRepository.findById(userId);
+        User foundUser = null;
+        if (user.isPresent()) {
+            foundUser = user.get();
+        }
+        UserLog userLog = UserLog.builder()
+                .user(foundUser)
+                .action(action)
+                .success(success)
+                .timestamp(LocalDateTime.now()).build();
         userLogRepository.save(userLog);
     }
 }
