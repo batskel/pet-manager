@@ -50,11 +50,10 @@ public class AdminController {
      * Create user.
      *
      * @param user {@link User}
-     * @return new {@link User}
      */
     @PostMapping
-    public User createUser(@RequestBody final User user) {
-        return userService.createUser(user);
+    public void createUser(@RequestBody final User user) {
+        userService.createUser(user);
     }
 
     /**

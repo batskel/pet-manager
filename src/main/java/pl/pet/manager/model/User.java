@@ -53,6 +53,6 @@ public class User {
     /**
      * Join for User log table.
      */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<UserLog> userLogs;
 }

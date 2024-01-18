@@ -2,8 +2,8 @@ package pl.pet.manager.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.pet.manager.dao.UserDAO;
 import pl.pet.manager.model.User;
-import pl.pet.manager.repository.UserRepository;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class UserService {
     /**
      * Repository for User table.
      */
-    private UserRepository userRepository;
+    private final UserDAO userDAO;
 
     /**
      * Get all users.
@@ -24,7 +24,7 @@ public class UserService {
      * @return list users
      */
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userDAO.getAllUsers();
     }
 
     /**
@@ -34,17 +34,16 @@ public class UserService {
      * @return {@link User}
      */
     public User getUserById(final Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userDAO.getUserById(userId);
     }
 
     /**
      * Create user.
      *
      * @param user {@link User}
-     * @return new {@link User}
      */
-    public User createUser(final User user) {
-        return userRepository.save(user);
+    public void createUser(final User user) {
+        userDAO.saveUser(user);
     }
 
     /**
@@ -53,6 +52,6 @@ public class UserService {
      * @param userId userId
      */
     public void deleteUser(final Long userId) {
-        userRepository.deleteById(userId);
+        userDAO.deleteUser(userId);
     }
 }
